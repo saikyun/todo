@@ -1,0 +1,15 @@
+{:deps true
+ 
+ :builds
+ {:app {:target :browser
+        
+        :modules {:main {:init-fn saikyun.todo.landing/init}}
+        
+        :devtools {:repl-init-ns saikyun.todo.landing
+                   :after-load saikyun.todo.landing/start
+                   :before-load saikyun.todo.landing/stop                  
+                   
+                   :repl-pprint true
+                   
+                   :http-root "public"
+                   :http-port 8020}}}}

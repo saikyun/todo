@@ -1,0 +1,2 @@
+{:lint-as {saikyun.mein.component/defncomp clojure.core/defn
+           saikyun.mein.component/defcomp clojure.core/def}}

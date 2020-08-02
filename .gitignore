@@ -1,0 +1,6 @@
+/.cpcache
+/.DS_Store
+/.shadow-cljs
+/public/js/
+/node_modules
+/.clj-kondo/.cache
