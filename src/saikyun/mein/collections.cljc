@@ -1,4 +1,5 @@
-(ns saikyun.mein.collections)
+(ns saikyun.mein.collections
+  (:require [alc.x-as-tests.cljs.immediate :refer-macros [run-tests!]]))
 
 (defn fconj
   ([c v] (fconj c v []))
@@ -13,18 +14,19 @@
          (conj kind c v))))
 
 (comment
-
-  (fact "turns two non-coll values into collection"
-        (fconj 1 2)     => [1 2]
-        (fconj 1 [2])   => [1 [2]]
-        (fconj 1 2 #{}) => #{1 2})
-
-  (fact "turns collection and value into that collection"
-        (fconj [1 2] 3) => [1 2 3]
-        (fconj [1 2] [3]) => [1 2 [3]])
-
-  (fact "nil and value returns coll with value as only element"
-        (fconj nil 2)   => [2]))
+  
+  ;; turns two non-coll values into collection
+  (fconj 1 2)     ;;=> [1 2]
+  (fconj 1 [2])   ;;=> [1 [2]]
+  (fconj 1 2 #{}) ;;=> #{1 2}
+  
+  ;; turns collection and value into that collection
+  (fconj [1 2] 3)   ;;=> [1 2 3]
+  (fconj [1 2] [3]) ;;=> [1 2 [3]]
+  
+  ;; nil and value returns coll with value as only element
+  (fconj nil 2)   ;;=> [2]
+  )
 
 (defn fmap
   [f v]
@@ -48,21 +50,20 @@
         (f v)))
 
 (comment
+  ;; works on values
+  (fmap inc 1)
+  ;;=> 2
   
-  (fact "works on values"
-        (fmap inc 1)
-        => 2)
-
-  (fact "works on collections"
-        (fmap inc [1 2 3])
-        => [2 3 4]
-        
-        (fmap inc '(1 2 3))
-        => [2 3 4]
-        
-        (->> (fmap #(update % 1 inc) '{:a 10, :b 20})
-             (into {}))
-        => {:a 11, :b 21})
-
-  (run-tests)
+  ;; works on collections
+  (fmap inc [1 2 3])
+  ;;=> [2 3 4]
+  
+  (fmap inc '(1 2 3))
+  ;;=> [2 3 4]
+  
+  (->> (fmap #(update % 1 inc) '{:a 10, :b 20})
+       (into {}))
+  ;;=> {:a 11, :b 21}
   )
+
+(run-tests!)
