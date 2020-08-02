@@ -33,7 +33,7 @@
   (into [:div] (map-indexed
                 (fn [i {:keys [todo done]}]
                   [:div
-                   ^{:on {:input #(swap! todos-atom update-in [i :done] not)}}
+                   ^{:on {:submit #(swap! todos-atom update-in [i :done] not)}}
                    [:input {:type "checkbox"
                             :checked done}]
                    [:label (if done {:style {:text-decoration :line-through}} {}) todo]])
@@ -60,26 +60,31 @@
             :background-color :white}}
    [:h1 "ToDo"]
    
-   [:input {:id "add-todo"}]
-   
-   ^{:on {:click #(let [i (.getElementById js/document "add-todo")]
-                    (swap! todos-atom conj {:todo (.. i -value)})
-                    (set! (.. i -value) ""))}}
-   [:button "Add"]
+   ^{:on {:submit #(let [i (.getElementById js/document "add-todo")]
+                     (.preventDefault %)
+                     (swap! todos-atom conj {:todo (.. i -value)})
+                     (set! (.. i -value) ""))}}
+   [:form
+    [:input {:id "add-todo"}]
+    
+    [:input {:type "submit", :value "Add"}]]
    
    ^{:listen {:atom todos-atom
               :f #(render (:node %2) (render-items %1))}}
    [:div]])
 
 (comment
-  ;; there should be an "Add"-button that can be clicked
+  ;; there should be a form
   (->> (drop 2 view)
-       (filter (fn [[tag _ text :as node]]
-                 (and (= :button tag)
-                      (= "Add" text)
-                      (-> (meta node) :on :click))))
+       (filter (fn [[tag & children :as node]]
+                 (and (= :form tag)
+                      (-> (meta node) :on :submit)
+                      (filter (fn [[tag {:keys [value type]}]]
+                                (and (= :input tag)
+                                     (= value "Add")
+                                     (= type "submit"))) children))))
        seq
-       boolean)
+       boolean)  
   ;;=> true
   )
 

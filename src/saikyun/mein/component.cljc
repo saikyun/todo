@@ -10,7 +10,7 @@
   ([prefix] (id! prefix id))
   ([prefix id-atom] (str prefix (swap! id-atom inc))))
 
-(def events [:press :click :change :keydown :keyup :input])
+(def events [:press :submit :click :change :keydown :keyup :input])
 
 (defn add-id-if-none
   [c]
