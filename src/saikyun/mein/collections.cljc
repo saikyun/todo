@@ -14,7 +14,6 @@
          (conj kind c v))))
 
 (comment
-  
   ;; turns two non-coll values into collection
   (fconj 1 2)     ;;=> [1 2]
   (fconj 1 [2])   ;;=> [1 [2]]
