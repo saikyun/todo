@@ -1,5 +1,5 @@
 (ns saikyun.mein.core
-  (:require [saikyun.mein.component :as cs]
+  (:require [saikyun.mein.component :as cs #?@(:cljs [:refer-macros [component]])]
             [saikyun.mein.listening :as ls]
             [saikyun.mein.extra-core :as ec])
   #?(:cljs (:require-macros [hiccups.core :as hiccups :refer [html]])))
@@ -16,7 +16,7 @@
                  (js/console.error "In path: " (str (filter some? (map (comp :form meta) path))))
                  (js/console.error "Full tree: " (str path)))
                (let [view (if-not (:component (meta view))
-                            (cs/component view)
+                            (component view)
                             view)]
                  (set! (.-innerHTML target) (html view))
                  (ec/traverse-hiccup #(do (ls/add-event %) %) view)  
