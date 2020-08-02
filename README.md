@@ -1,6 +1,13 @@
 # todo
 
-# start
+Basic todo app
+
+# dependencies
+
+1. clojure cli tools: https://clojure.org/guides/getting_started
+2. shadow-cljs: https://shadow-cljs.github.io/docs/UsersGuide.html#_installation
+
+# run
 
 ```
 git clone https://github.com/Saikyun/todo
