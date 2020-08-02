@@ -33,7 +33,7 @@
   (into [:div] (map-indexed
                 (fn [i {:keys [todo done]}]
                   [:div
-                   ^{:on {:submit #(swap! todos-atom update-in [i :done] not)}}
+                   ^{:on {:change #(swap! todos-atom update-in [i :done] not)}}
                    [:input {:type "checkbox"
                             :checked done}]
                    [:label (if done {:style {:text-decoration :line-through}} {}) todo]])
@@ -70,7 +70,7 @@
     [:input {:type "submit", :value "Add"}]]
    
    ^{:listen {:atom todos-atom
-              :f #(render (:node %2) (render-items %1))}}
+              :f #(do (println "wat") (render (:node %2) (render-items %1)))}}
    [:div]])
 
 (comment
